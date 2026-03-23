@@ -63,7 +63,7 @@ export function ProductCard({ product, rank }: { product: Product, rank?: number
         <div className="mt-6 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-gray-100 dark:border-gray-800 pt-4">
           <div className="flex flex-col">
             <span className="text-xs text-gray-500 dark:text-gray-400">Current Price</span>
-            <span className="text-2xl font-bold text-gray-900 dark:text-white">${product.price.toFixed(2)}</span>
+            <span className="text-2xl font-bold text-gray-900 dark:text-white">₹{product.price.toLocaleString('en-IN')}</span>
           </div>
           
           <div className="flex w-full sm:w-auto gap-3">

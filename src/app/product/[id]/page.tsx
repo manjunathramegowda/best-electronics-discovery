@@ -121,7 +121,7 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
                 <div>
                   <p className="text-sm font-semibold text-gray-500 dark:text-gray-400 mb-1 uppercase tracking-wide">Best Available Price</p>
                   <div className="flex items-baseline gap-2">
-                    <p className="text-5xl font-extrabold text-gray-900 dark:text-white">${product.price.toFixed(2)}</p>
+                    <p className="text-5xl font-extrabold text-gray-900 dark:text-white">₹{product.price.toLocaleString('en-IN')}</p>
                   </div>
                 </div>
                 <div className="text-right flex flex-col items-end">
@@ -134,14 +134,14 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
 
               <div className="space-y-4 relative z-10">
                 <a href="#" className="w-full flex items-center justify-center gap-3 bg-[#FF9900] hover:bg-[#e68a00] text-black font-extrabold text-lg py-4 px-8 rounded-2xl transition-transform hover:scale-[1.02] shadow-sm">
-                  Buy on Amazon <ExternalLink className="h-5 w-5" />
+                  Buy on Amazon.in <ExternalLink className="h-5 w-5" />
                 </a>
                 <div className="grid grid-cols-2 gap-4">
-                  <a href="#" className="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-bold py-3.5 px-4 rounded-xl transition-colors">
-                    Walmart <ExternalLink className="h-4 w-4" />
+                  <a href="#" className="flex items-center justify-center gap-2 bg-[#047BD5] hover:bg-[#035ca0] text-white font-bold py-3.5 px-4 rounded-xl transition-colors">
+                    Flipkart <ExternalLink className="h-4 w-4" />
                   </a>
-                  <a href="#" className="flex items-center justify-center gap-2 bg-[#CC0000] hover:bg-[#b30000] text-white font-bold py-3.5 px-4 rounded-xl transition-colors">
-                    Target <ExternalLink className="h-4 w-4" />
+                  <a href="#" className="flex items-center justify-center gap-2 bg-[#00A1A1] hover:bg-[#008080] text-white font-bold py-3.5 px-4 rounded-xl transition-colors">
+                    Croma <ExternalLink className="h-4 w-4" />
                   </a>
                 </div>
               </div>
