@@ -26,7 +26,7 @@ const categoryDefinitions = [
 ];
 
 async function seedMassiveCatalog(totalItems = 500) {
-  console.log(`Starting massive catalog seeding operation (${totalItems} items)...`);
+  console.log(`Starting strict pricing catalog seeding operation (${totalItems} items)...`);
 
   // Clear existing data heavily
   console.log("Wiping existing DB tables...");
@@ -65,43 +65,98 @@ async function seedMassiveCatalog(totalItems = 500) {
     "It's decent, but I had higher expectations. The camera quality in low light is just okay."
   ];
 
-  // Global Models Arrays mapping directly to real Indian market existence
-  const globalModels = {
+  // Global Models Arrays mapping directly to real Indian market existence and accurate MSRP baselines
+  type ModelDef = { name: string, msrp: number };
+  type BrandDef = { brand: string, models: ModelDef[] };
+
+  const globalModels: Record<string, BrandDef[]> = {
     'best-mobiles': [
-      { brand: 'Apple', models: ['iPhone 15 Pro Max', 'iPhone 15', 'iPhone 14 Plus', 'iPhone 13'] },
-      { brand: 'Samsung', models: ['Galaxy S24 Ultra', 'Galaxy S23 FE', 'Galaxy Z Fold 5', 'Galaxy M34 5G', 'Galaxy A54'] },
-      { brand: 'OnePlus', models: ['12R 5G', '11 5G', 'Nord CE 3 Lite', 'Open Foldable'] },
-      { brand: 'Google', models: ['Pixel 8 Pro', 'Pixel 7a', 'Pixel Fold'] },
-      { brand: 'Xiaomi', models: ['Redmi Note 13 Pro', 'Xiaomi 14 Ultra', 'Poco X6 Pro'] },
-      { brand: 'Vivo', models: ['X100 Pro', 'V30 Pro', 'T2x 5G'] }
+      { brand: 'Apple', models: [
+        { name: 'iPhone 15 Pro Max', msrp: 159900 }, { name: 'iPhone 15', msrp: 79900 }, { name: 'iPhone 14 Plus', msrp: 89900 }, { name: 'iPhone 13', msrp: 59900 }
+      ]},
+      { brand: 'Samsung', models: [
+        { name: 'Galaxy S24 Ultra', msrp: 129999 }, { name: 'Galaxy S23 FE', msrp: 59999 }, { name: 'Galaxy Z Fold 5', msrp: 154999 }, { name: 'Galaxy M34 5G', msrp: 18999 }, { name: 'Galaxy A54', msrp: 38999 }
+      ]},
+      { brand: 'OnePlus', models: [
+        { name: '12R 5G', msrp: 39999 }, { name: '11 5G', msrp: 56999 }, { name: 'Nord CE 3 Lite', msrp: 19999 }, { name: 'Open Foldable', msrp: 139999 }
+      ]},
+      { brand: 'Google', models: [
+        { name: 'Pixel 8 Pro', msrp: 106999 }, { name: 'Pixel 7a', msrp: 43999 }, { name: 'Pixel Fold', msrp: 145000 }
+      ]},
+      { brand: 'Xiaomi', models: [
+        { name: 'Redmi Note 13 Pro', msrp: 25999 }, { name: 'Xiaomi 14 Ultra', msrp: 99999 }, { name: 'Poco X6 Pro', msrp: 26999 }
+      ]},
+      { brand: 'Vivo', models: [
+        { name: 'X100 Pro', msrp: 89999 }, { name: 'V30 Pro', msrp: 41999 }, { name: 'T2x 5G', msrp: 12999 }
+      ]}
     ],
     'best-laptops': [
-      { brand: 'Apple', models: ['MacBook Air M3 (15-inch)', 'MacBook Pro 16 M3 Max', 'MacBook Air M1'] },
-      { brand: 'Dell', models: ['XPS 15 OLED', 'Inspiron 15 3000', 'Alienware m18'] },
-      { brand: 'HP', models: ['Spectre x360', 'Pavilion 14', 'Omen Transcend 16', 'Victus Gaming'] },
-      { brand: 'Lenovo', models: ['ThinkPad X1 Carbon Gen 11', 'IdeaPad Slim 3', 'Legion Pro 5i'] },
-      { brand: 'ASUS', models: ['ROG Zephyrus G14', 'Vivobook 16X', 'TUF Gaming A15'] }
+      { brand: 'Apple', models: [
+        { name: 'MacBook Air M3 (15-inch)', msrp: 134900 }, { name: 'MacBook Pro 16 M3 Max', msrp: 349900 }, { name: 'MacBook Air M1', msrp: 83900 }
+      ]},
+      { brand: 'Dell', models: [
+        { name: 'XPS 15 OLED', msrp: 210000 }, { name: 'Inspiron 15 3000', msrp: 45000 }, { name: 'Alienware m18', msrp: 350000 }
+      ]},
+      { brand: 'HP', models: [
+        { name: 'Spectre x360', msrp: 160000 }, { name: 'Pavilion 14', msrp: 65000 }, { name: 'Omen Transcend 16', msrp: 175000 }, { name: 'Victus Gaming', msrp: 75000 }
+      ]},
+      { brand: 'Lenovo', models: [
+        { name: 'ThinkPad X1 Carbon Gen 11', msrp: 180000 }, { name: 'IdeaPad Slim 3', msrp: 40000 }, { name: 'Legion Pro 5i', msrp: 140000 }
+      ]},
+      { brand: 'ASUS', models: [
+        { name: 'ROG Zephyrus G14', msrp: 155000 }, { name: 'Vivobook 16X', msrp: 58000 }, { name: 'TUF Gaming A15', msrp: 82000 }
+      ]}
     ],
     'best-tvs': [
-      { brand: 'Samsung', models: ['65" Neo QLED 8K Smart TV', '55" The Frame QLED', '43" Crystal Vision 4K Ultra HD'] },
-      { brand: 'LG', models: ['65" OLED evo C3 Series', '55" UR7500 LED 4K', '77" G3 OLED'] },
-      { brand: 'Sony', models: ['Bravia XR 65" A80L OLED', 'Bravia 55" X82L LED'] },
-      { brand: 'TCL', models: ['55" 4K Google TV C645', '65" Mini LED QLED'] },
-      { brand: 'Hisense', models: ['55" Tornado Series 4K', '65" U7K Mini LED'] }
+      { brand: 'Samsung', models: [
+        { name: '65" Neo QLED 8K Smart TV', msrp: 320000 }, { name: '55" The Frame QLED', msrp: 95000 }, { name: '43" Crystal Vision 4K Ultra HD', msrp: 32000 }
+      ]},
+      { brand: 'LG', models: [
+        { name: '65" OLED evo C3 Series', msrp: 210000 }, { name: '55" UR7500 LED 4K', msrp: 45000 }, { name: '77" G3 OLED', msrp: 450000 }
+      ]},
+      { brand: 'Sony', models: [
+        { name: 'Bravia XR 65" A80L OLED', msrp: 230000 }, { name: 'Bravia 55" X82L LED', msrp: 74900 }
+      ]},
+      { brand: 'TCL', models: [
+        { name: '55" 4K Google TV C645', msrp: 42000 }, { name: '65" Mini LED QLED', msrp: 85000 }
+      ]},
+      { brand: 'Hisense', models: [
+        { name: '55" Tornado Series 4K', msrp: 38000 }, { name: '65" U7K Mini LED', msrp: 70000 }
+      ]}
     ],
     'best-audio': [
-      { brand: 'Sony', models: ['WH-1000XM5 Wireless ANC', 'WF-1000XM5 Earbuds', 'HT-A7000 Soundbar'] },
-      { brand: 'Apple', models: ['AirPods Pro (2nd Gen)', 'AirPods Max', 'AirPods (3rd Gen)'] },
-      { brand: 'Bose', models: ['QuietComfort Ultra Headphones', 'Smart Soundbar 900'] },
-      { brand: 'JBL', models: ['Flip 6 Waterproof Speaker', 'Quantum 910 Headset', 'PartyBox 310'] },
-      { brand: 'Sennheiser', models: ['Momentum 4 Wireless', 'HD 660S2'] }
+      { brand: 'Sony', models: [
+        { name: 'WH-1000XM5 Wireless ANC', msrp: 27030 }, { name: 'WF-1000XM5 Earbuds', msrp: 24990 }, { name: 'HT-A7000 Soundbar', msrp: 110000 }
+      ]},
+      { brand: 'Apple', models: [
+        { name: 'AirPods Pro (2nd Gen)', msrp: 24900 }, { name: 'AirPods Max', msrp: 59900 }, { name: 'AirPods (3rd Gen)', msrp: 19900 }
+      ]},
+      { brand: 'Bose', models: [
+        { name: 'QuietComfort Ultra Headphones', msrp: 35900 }, { name: 'Smart Soundbar 900', msrp: 104900 }
+      ]},
+      { brand: 'JBL', models: [
+        { name: 'Flip 6 Waterproof Speaker', msrp: 11999 }, { name: 'Quantum 910 Headset', msrp: 22000 }, { name: 'PartyBox 310', msrp: 45000 }
+      ]},
+      { brand: 'Sennheiser', models: [
+        { name: 'Momentum 4 Wireless', msrp: 34990 }, { name: 'HD 660S2', msrp: 54990 }
+      ]}
     ],
     'best-smartwatches': [
-      { brand: 'Apple', models: ['Watch Series 9', 'Watch Ultra 2', 'Watch SE (2nd Gen)'] },
-      { brand: 'Samsung', models: ['Galaxy Watch 6 Classic', 'Galaxy Watch 5 Pro'] },
-      { brand: 'Garmin', models: ['Fenix 7X Pro', 'Venu 3', 'Forerunner 265'] },
-      { brand: 'Fitbit', models: ['Charge 6', 'Versa 4', 'Sense 2'] },
-      { brand: 'Amazfit', models: ['GTR 4', 'T-Rex Ultra'] }
+      { brand: 'Apple', models: [
+        { name: 'Watch Series 9', msrp: 41900 }, { name: 'Watch Ultra 2', msrp: 89900 }, { name: 'Watch SE (2nd Gen)', msrp: 29900 }
+      ]},
+      { brand: 'Samsung', models: [
+        { name: 'Galaxy Watch 6 Classic', msrp: 36999 }, { name: 'Galaxy Watch 5 Pro', msrp: 39999 }
+      ]},
+      { brand: 'Garmin', models: [
+        { name: 'Fenix 7X Pro', msrp: 98990 }, { name: 'Venu 3', msrp: 47990 }, { name: 'Forerunner 265', msrp: 44990 }
+      ]},
+      { brand: 'Fitbit', models: [
+        { name: 'Charge 6', msrp: 14999 }, { name: 'Versa 4', msrp: 20499 }, { name: 'Sense 2', msrp: 24999 }
+      ]},
+      { brand: 'Amazfit', models: [
+        { name: 'GTR 4', msrp: 16999 }, { name: 'T-Rex Ultra', msrp: 42999 }
+      ]}
     ]
   };
 
@@ -125,12 +180,17 @@ async function seedMassiveCatalog(totalItems = 500) {
     for (let p = 0; p < itemsPerCategory; p++) {
       // Pick a real brand and real model mapping
       const brandObj = faker.helpers.arrayElement(modelsList);
-      const randomModelName = faker.helpers.arrayElement(brandObj.models);
+      const randomModelObj = faker.helpers.arrayElement(brandObj.models);
       
       const brand = brandObj.brand;
-      const title = `${brand} ${randomModelName} (${faker.number.int({min:128, max:512})}GB)`;
+      const title = `${brand} ${randomModelObj.name} (${faker.number.int({min:128, max:512})}GB)`;
       
-      const price = faker.number.int({ min: 15_000, max: 250_000 });
+      // Compute realistic price based on MSRP (slight discount variable)
+      const isDiscounted = Math.random() > 0.3; // 70% chance of being discounted
+      const price = isDiscounted 
+          ? Math.floor(randomModelObj.msrp * faker.number.float({ min: 0.82, max: 0.98 }))
+          : randomModelObj.msrp;
+
       const rating = faker.number.float({ min: 3.5, max: 5.0 });
       const review_count = faker.number.int({ min: 50, max: 50000 });
       // Score algorithm prioritizes good ratings + high counts + competitive price ratio
@@ -150,7 +210,7 @@ async function seedMassiveCatalog(totalItems = 500) {
       });
 
       // Simple English description
-      const basicEnglishPara = `An exceptional release from ${brand}, the ${randomModelName} delivers cutting-edge performance targeted explicitly at the modern demographic. With high-fidelity output metrics and robust architectural enhancements, this gadget brings unparalleled efficiency directly to your hands. Expect highly optimized load balancing and dynamic interface rendering on every use.`;
+      const basicEnglishPara = `An exceptional release from ${brand}, the ${randomModelObj.name} delivers cutting-edge performance targeted explicitly at the modern demographic. With high-fidelity output metrics and robust architectural enhancements, this gadget brings unparalleled efficiency directly to your hands. Expect highly optimized load balancing and dynamic interface rendering on every use.`;
 
       generatedProducts.push({
         category_id: category.id,
@@ -195,8 +255,8 @@ async function seedMassiveCatalog(totalItems = 500) {
       const affiliateLinksBatch: any[] = [];
       for (const item of insertedData) {
         affiliateLinksBatch.push({ product_id: item.id, retailer: 'Amazon.in', url: `https://www.amazon.in/s?k=${encodeURIComponent(item.title)}`, current_price: item.price });
-        affiliateLinksBatch.push({ product_id: item.id, retailer: 'Flipkart', url: `https://www.flipkart.com/search?q=${encodeURIComponent(item.title)}`, current_price: item.price + 500 });
-        affiliateLinksBatch.push({ product_id: item.id, retailer: 'Croma', url: `https://www.croma.com/searchB?q=${encodeURIComponent(item.title)}`, current_price: item.price + 200 });
+        affiliateLinksBatch.push({ product_id: item.id, retailer: 'Flipkart', url: `https://www.flipkart.com/search?q=${encodeURIComponent(item.title)}`, current_price: item.price + Math.floor(Math.random() * 500) });
+        affiliateLinksBatch.push({ product_id: item.id, retailer: 'Croma', url: `https://www.croma.com/searchB?q=${encodeURIComponent(item.title)}`, current_price: item.price + Math.floor(Math.random() * 200) });
       }
       
       const { error: linkErr } = await supabase.from('affiliate_links').insert(affiliateLinksBatch);
