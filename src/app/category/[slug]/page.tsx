@@ -43,6 +43,15 @@ export default async function CategoryPage({
     categoryProducts = categoryProducts.filter((p: any) => p.price <= maxPrice);
   }
   
+  const sort = resolvedSearchParams.sort as string;
+  if (sort === 'price_asc') {
+    categoryProducts.sort((a: any, b: any) => a.price - b.price);
+  } else if (sort === 'price_desc') {
+    categoryProducts.sort((a: any, b: any) => b.price - a.price);
+  } else if (sort === 'rating_desc') {
+    categoryProducts.sort((a: any, b: any) => b.rating - a.rating);
+  }
+  
   // Format slug to readable title
   const title = slug.replace('best-', '').replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase());
 
@@ -94,10 +103,21 @@ export default async function CategoryPage({
                   <input type="number" name="max_price" placeholder="Max" className="w-full rounded-lg border border-gray-200 bg-gray-50 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 dark:bg-gray-950 dark:border-gray-800 dark:text-white transition-all" />
                 </div>
               </div>
+              
+              {/* Sort By Filter */}
+              <div>
+                <h3 className="text-sm font-semibold text-gray-900 dark:text-white mb-3 tracking-wide uppercase">Sort By</h3>
+                <select name="sort" className="w-full rounded-lg border border-gray-200 bg-gray-50 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 dark:bg-gray-950 dark:border-gray-800 dark:text-white transition-all appearance-none">
+                  <option value="score_desc">Smart Score (Highest)</option>
+                  <option value="price_asc">Price (Lowest First)</option>
+                  <option value="price_desc">Price (Highest First)</option>
+                  <option value="rating_desc">Top Rated</option>
+                </select>
+              </div>
             </div>
 
             <button type="submit" className="mt-8 w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl transition-colors shadow-sm">
-              Apply Filters
+              Apply Filters & Sort
             </button>
           </form>
         </div>
@@ -115,12 +135,6 @@ export default async function CategoryPage({
 
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
             <span className="text-sm text-gray-500 font-medium bg-gray-100 dark:bg-gray-800 px-3 py-1 rounded-full">{categoryProducts.length} products found</span>
-            <div className="flex items-center gap-3">
-              <span className="text-sm text-gray-500 font-medium">Sort by:</span>
-              <button className="flex items-center gap-2 text-sm font-semibold text-gray-900 dark:text-white bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl px-4 py-2 shadow-sm hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
-                Smart Score <ChevronDown className="h-4 w-4 text-gray-400" />
-              </button>
-            </div>
           </div>
 
           <div className="grid gap-6">

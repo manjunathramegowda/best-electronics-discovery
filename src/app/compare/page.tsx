@@ -76,7 +76,17 @@ export default async function ComparePage({ searchParams }: { searchParams: Prom
                 <div className="bg-gray-50 dark:bg-gray-950 px-5 py-4 border-b border-gray-200 dark:border-gray-800 font-bold text-gray-900 dark:text-white uppercase tracking-wide text-sm">Specifications</div>
                 <dl className="divide-y divide-gray-100 dark:divide-gray-800">
                   {Object.entries(product1.specs).map(([key, value]) => {
-                    if (key === 'pros' || key === 'cons' || key === 'description' || key === 'reviews') return null;
+                    if (key === 'description' || key === 'reviews') return null;
+                    if (key === 'pros' || key === 'cons') {
+                        return (
+                          <div key={key} className="flex px-5 py-4 hover:bg-gray-50 dark:bg-gray-50/50 dark:hover:bg-gray-800/50 transition-colors border-t border-gray-100 dark:border-gray-800">
+                            <dt className="w-1/3 text-sm text-gray-500 dark:text-gray-400 font-bold uppercase">{key}</dt>
+                            <dd className="flex-1 text-sm font-medium text-gray-900 dark:text-gray-200 text-right">
+                                {(value as string[]).map((v, i) => <div key={i} className="mb-1">• {v}</div>)}
+                            </dd>
+                          </div>
+                        )
+                    }
                     return (
                       <div key={key} className="flex px-5 py-4 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
                         <dt className="w-1/3 text-sm text-gray-500 dark:text-gray-400 font-medium">{key}</dt>
@@ -101,7 +111,17 @@ export default async function ComparePage({ searchParams }: { searchParams: Prom
                 <div className="bg-gray-50 dark:bg-gray-950 px-5 py-4 border-b border-gray-200 dark:border-gray-800 font-bold text-gray-900 dark:text-white uppercase tracking-wide text-sm">Specifications</div>
                 <dl className="divide-y divide-gray-100 dark:divide-gray-800">
                   {Object.entries(product2.specs).map(([key, value]) => {
-                    if (key === 'pros' || key === 'cons' || key === 'description' || key === 'reviews') return null;
+                    if (key === 'description' || key === 'reviews') return null;
+                    if (key === 'pros' || key === 'cons') {
+                        return (
+                          <div key={key} className="flex px-5 py-4 hover:bg-gray-50 dark:bg-gray-50/50 dark:hover:bg-gray-800/50 transition-colors border-t border-gray-100 dark:border-gray-800">
+                            <dt className="w-1/3 text-sm text-gray-500 dark:text-gray-400 font-bold uppercase">{key}</dt>
+                            <dd className="flex-1 text-sm font-medium text-gray-900 dark:text-gray-200 text-right">
+                                {(value as string[]).map((v, i) => <div key={i} className="mb-1">• {v}</div>)}
+                            </dd>
+                          </div>
+                        )
+                    }
                     return (
                       <div key={key} className="flex px-5 py-4 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
                         <dt className="w-1/3 text-sm text-gray-500 dark:text-gray-400 font-medium">{key}</dt>
