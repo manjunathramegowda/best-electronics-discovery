@@ -120,7 +120,7 @@ async function seedMassiveCatalog(totalItems = 500) {
     const batch = generatedProducts.slice(i, i + batchSize);
     
     // Perform bulk insert
-    const { data: insertedData, error } = await supabase.from('products').insert(batch).select('id, price');
+    const { data: insertedData, error } = await supabase.from('products').insert(batch).select('id, price, title');
     
     if (error) {
       console.error(`Batch ${i} failed:`, error.message);
@@ -129,10 +129,11 @@ async function seedMassiveCatalog(totalItems = 500) {
 
     if (insertedData) {
       // Create affiliate links in bulk
-      const affiliateLinksBatch = [];
+      const affiliateLinksBatch: any[] = [];
       for (const item of insertedData) {
-        affiliateLinksBatch.push({ product_id: item.id, retailer: 'Amazon.in', url: '#', current_price: item.price });
-        affiliateLinksBatch.push({ product_id: item.id, retailer: 'Flipkart', url: '#', current_price: item.price + 500 });
+        affiliateLinksBatch.push({ product_id: item.id, retailer: 'Amazon.in', url: `https://www.amazon.in/s?k=${encodeURIComponent(item.title)}`, current_price: item.price });
+        affiliateLinksBatch.push({ product_id: item.id, retailer: 'Flipkart', url: `https://www.flipkart.com/search?q=${encodeURIComponent(item.title)}`, current_price: item.price + 500 });
+        affiliateLinksBatch.push({ product_id: item.id, retailer: 'Croma', url: `https://www.croma.com/searchB?q=${encodeURIComponent(item.title)}`, current_price: item.price + 200 });
       }
       
       const { error: linkErr } = await supabase.from('affiliate_links').insert(affiliateLinksBatch);
