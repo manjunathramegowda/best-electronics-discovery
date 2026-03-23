@@ -54,12 +54,15 @@ export function ProductCard({ product, rank }: { product: Product, rank?: number
           </Link>
           
           <div className="mt-4 grid grid-cols-2 gap-y-2 gap-x-4 text-sm text-gray-600 dark:text-gray-400">
-            {Object.entries(product.specs).map(([key, value]) => (
-              <div key={key} className="flex flex-col">
-                <span className="text-xs uppercase tracking-wider text-gray-400 dark:text-gray-500">{key}</span>
-                <span className="font-medium text-gray-900 dark:text-gray-200">{value}</span>
-              </div>
-            ))}
+            {Object.entries(product.specs || {}).map(([key, value]) => {
+              if (key === 'pros' || key === 'cons' || key === 'description' || key === 'reviews') return null;
+              return (
+                <div key={key} className="flex flex-col">
+                  <span className="text-xs uppercase tracking-wider text-gray-400 dark:text-gray-500">{key}</span>
+                  <span className="font-medium text-gray-900 dark:text-gray-200">{String(value)}</span>
+                </div>
+              );
+            })}
           </div>
         </div>
         
@@ -71,20 +74,24 @@ export function ProductCard({ product, rank }: { product: Product, rank?: number
           
           <div className="flex w-full sm:w-auto gap-3">
             <Link 
+              href={`/compare?category=${product.category_slug}&id1=${product.id}`}
+              className="hidden md:flex flex-1 sm:flex-none items-center justify-center rounded-xl bg-indigo-50 text-indigo-700 px-4 py-2.5 text-sm font-semibold hover:bg-indigo-100 dark:bg-indigo-500/10 dark:text-indigo-400 dark:hover:bg-indigo-500/20 transition-colors"
+            >
+              Compare
+            </Link>
+            <Link 
               href={`/product/${product.id}`}
               className="flex-1 sm:flex-none flex items-center justify-center rounded-xl bg-gray-100 px-4 py-2.5 text-sm font-semibold text-gray-900 hover:bg-gray-200 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700 transition-colors"
             >
               Read Review
             </Link>
-            <a 
-              href="#"
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link 
+              href={`/product/${product.id}`}
               className="flex-1 sm:flex-none flex items-center justify-center gap-2 rounded-xl bg-blue-600 px-6 py-2.5 text-sm font-semibold text-white hover:bg-blue-700 transition-all shadow-sm hover:shadow"
             >
               <ShoppingCart className="h-4 w-4" />
               Buy Now
-            </a>
+            </Link>
           </div>
         </div>
       </div>
