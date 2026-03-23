@@ -11,12 +11,15 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
   if (query && query.trim() !== '') {
     const { data } = await supabase
       .from('products')
-      .select('*, affiliate_links(*)')
+      .select('*, affiliate_links(*), categories(slug)')
       .ilike('title', `%${query}%`)
       .order('computed_score', { ascending: false })
       .limit(50);
       
-    searchResults = data || [];
+    searchResults = (data || []).map((p: any) => ({
+      ...p,
+      category_slug: p.categories?.slug || ''
+    }));
   }
 
   return (

@@ -38,7 +38,7 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
     },
     offers: {
       '@type': 'Offer',
-      priceCurrency: 'USD',
+      priceCurrency: 'INR',
       price: product.price,
       availability: 'https://schema.org/InStock',
     },
@@ -75,16 +75,11 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
                 <span className="text-3xl font-extrabold leading-none">{product.computed_score}</span>
               </div>
               
-              <div className="text-gray-400 font-medium italic">High-Res Product Image</div>
-            </div>
-            
-            {/* Thumbnails */}
-            <div className="grid grid-cols-4 gap-4">
-              {[1, 2, 3, 4].map((i) => (
-                <div key={i} className="aspect-square bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl flex items-center justify-center hover:border-blue-500 cursor-pointer transition-colors shadow-sm">
-                  <span className="text-gray-300 text-xs text-center">Img {i}</span>
-                </div>
-              ))}
+              {product.image_url ? (
+                <img src={product.image_url} alt={product.title} className="max-h-full max-w-full object-contain" />
+              ) : (
+                <div className="text-gray-400 font-medium italic">Product Image</div>
+              )}
             </div>
           </div>
 
@@ -164,12 +159,15 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
                 <h3 className="text-xl font-extrabold text-gray-900 dark:text-white mb-5 uppercase tracking-wide">Key Specs</h3>
                 <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 overflow-hidden shadow-sm">
                   <dl className="divide-y divide-gray-100 dark:divide-gray-800">
-                    {Object.entries(product.specs || {}).map(([key, value]) => (
-                      <div key={key} className="flex grid-cols-3 px-5 py-3.5 sm:gap-4 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
-                        <dt className="text-sm font-semibold text-gray-500 dark:text-gray-400 w-1/3">{key}</dt>
-                        <dd className="text-sm font-bold text-gray-900 dark:text-gray-200 flex-1 text-right">{String(value)}</dd>
-                      </div>
-                    ))}
+                    {Object.entries(product.specs || {}).map(([key, value]) => {
+                      if (key === 'pros' || key === 'cons' || key === 'description' || key === 'reviews') return null;
+                      return (
+                        <div key={key} className="flex grid-cols-3 px-5 py-3.5 sm:gap-4 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
+                          <dt className="text-sm font-semibold text-gray-500 dark:text-gray-400 w-1/3">{key}</dt>
+                          <dd className="text-sm font-bold text-gray-900 dark:text-gray-200 flex-1 text-right">{String(value)}</dd>
+                        </div>
+                      );
+                    })}
                   </dl>
                 </div>
               </div>

@@ -90,8 +90,8 @@ export default async function Home() {
               <div className="h-12 w-12 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-blue-600 dark:text-blue-400 mb-4">
                 <Zap className="h-6 w-6" />
               </div>
-              <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">Live Price Checking</h3>
-              <p className="text-sm text-gray-600 dark:text-gray-400">Our system hits retailer APIs daily so you always know exactly what a product costs right now.</p>
+              <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">Real-Time Prices</h3>
+              <p className="text-sm text-gray-600 dark:text-gray-400">Prices are sourced from Amazon.in, Flipkart, and Croma so you can compare and buy at the best deal.</p>
             </div>
           </div>
         </div>

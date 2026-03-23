@@ -1,5 +1,5 @@
 import { ProductCard } from '@/components/ProductCard';
-import { Filter, ChevronDown } from 'lucide-react';
+import { Filter } from 'lucide-react';
 import Link from 'next/link';
 import { Metadata } from 'next';
 import { getProductsByCategory } from '@/lib/api';
@@ -80,7 +80,7 @@ export default async function CategoryPage({
               <div>
                 <h3 className="text-sm font-semibold text-gray-900 dark:text-white mb-3 tracking-wide uppercase">Brand</h3>
                 <div className="space-y-3 max-h-48 overflow-y-auto">
-                  {['Apple', 'Samsung', 'Google', 'OnePlus', 'ASUS', 'Lenovo', 'Dell'].map((brand) => (
+                  {['Apple', 'Samsung', 'Google', 'OnePlus', 'Xiaomi', 'Vivo', 'ASUS', 'Lenovo', 'Dell', 'HP', 'LG', 'Sony', 'Bose', 'JBL', 'Sennheiser', 'Garmin', 'Fitbit', 'Amazfit', 'TCL', 'Hisense', 'Motorola', 'Oppo', 'Acer', 'Microsoft', 'Jabra', 'Panasonic'].map((brand) => (
                     <label key={brand} className="flex items-center gap-3 cursor-pointer group">
                       <div className="relative flex items-center justify-center">
                         <input type="checkbox" name="brand" value={brand} className="peer appearance-none w-5 h-5 border border-gray-300 rounded checked:bg-blue-600 checked:border-blue-600 dark:border-gray-600 dark:bg-gray-800 transition-colors cursor-pointer" />

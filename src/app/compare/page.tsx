@@ -34,6 +34,8 @@ export default async function ComparePage({ searchParams }: { searchParams: Prom
             <option value="best-mobiles">Mobile Phones</option>
             <option value="best-laptops">Laptops</option>
             <option value="best-tvs">Televisions</option>
+            <option value="best-audio">Audio</option>
+            <option value="best-smartwatches">Smartwatches</option>
           </select>
         </div>
         
