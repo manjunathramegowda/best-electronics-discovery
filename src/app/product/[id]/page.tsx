@@ -133,17 +133,24 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
               </div>
 
               <div className="space-y-4 relative z-10">
-                <a href="#" className="w-full flex items-center justify-center gap-3 bg-[#FF9900] hover:bg-[#e68a00] text-black font-extrabold text-lg py-4 px-8 rounded-2xl transition-transform hover:scale-[1.02] shadow-sm">
-                  Buy on Amazon.in <ExternalLink className="h-5 w-5" />
-                </a>
-                <div className="grid grid-cols-2 gap-4">
-                  <a href="#" className="flex items-center justify-center gap-2 bg-[#047BD5] hover:bg-[#035ca0] text-white font-bold py-3.5 px-4 rounded-xl transition-colors">
-                    Flipkart <ExternalLink className="h-4 w-4" />
-                  </a>
-                  <a href="#" className="flex items-center justify-center gap-2 bg-[#00A1A1] hover:bg-[#008080] text-white font-bold py-3.5 px-4 rounded-xl transition-colors">
-                    Croma <ExternalLink className="h-4 w-4" />
-                  </a>
-                </div>
+                {product.affiliate_links && product.affiliate_links.length > 0 ? (
+                  <>
+                    <a href={product.affiliate_links[0]?.url || '#'} target="_blank" rel="noopener noreferrer" className="w-full flex items-center justify-center gap-3 bg-[#FF9900] hover:bg-[#e68a00] text-black font-extrabold text-lg py-4 px-8 rounded-2xl transition-transform hover:scale-[1.02] shadow-sm">
+                      Buy on {product.affiliate_links[0]?.retailer || 'Store'} <ExternalLink className="h-5 w-5" />
+                    </a>
+                    {product.affiliate_links.length > 1 && (
+                      <div className="grid grid-cols-2 gap-4">
+                        {product.affiliate_links.slice(1).map((link: any, idx: number) => (
+                          <a key={idx} href={link.url} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 bg-gray-800 hover:bg-gray-900 dark:bg-gray-800 dark:hover:bg-gray-700 text-white font-bold py-3.5 px-4 rounded-xl transition-colors">
+                            {link.retailer} <ExternalLink className="h-4 w-4" />
+                          </a>
+                        ))}
+                      </div>
+                    )}
+                  </>
+                ) : (
+                  <p className="text-gray-500 italic text-center py-4">No buying options available right now.</p>
+                )}
               </div>
               <p className="text-[11px] text-center text-gray-400 mt-5 font-medium">
                 Prices last verified today via API. We earn a commission if you purchase through these links.
@@ -197,6 +204,29 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
                 </div>
               </div>
             </div>
+            
+            {/* Simulated Online Reviews Section */}
+            {product.specs?.reviews && product.specs.reviews.length > 0 && (
+              <div className="mt-16">
+                <h3 className="text-2xl font-extrabold text-gray-900 dark:text-white mb-6 uppercase tracking-wide">Top Reviews from the Web</h3>
+                <div className="space-y-6">
+                  {product.specs.reviews.map((rev: any, idx: number) => (
+                    <div key={idx} className="bg-white dark:bg-gray-900 p-6 rounded-2xl border border-gray-100 dark:border-gray-800 shadow-sm">
+                      <div className="flex items-center gap-2 mb-3">
+                        <div className="flex text-yellow-500">
+                          {[...Array(5)].map((_, st) => (
+                            <Star key={st} className={`h-4 w-4 ${st < rev.rating ? 'fill-current' : 'text-gray-300 dark:text-gray-700'}`} />
+                          ))}
+                        </div>
+                        <span className="font-bold text-gray-900 dark:text-gray-100">{rev.title}</span>
+                      </div>
+                      <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed mb-4">"{rev.comment}"</p>
+                      <span className="text-xs text-gray-500 font-medium">— {rev.author} (Verified Purchase)</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
 
           </div>
         </div>

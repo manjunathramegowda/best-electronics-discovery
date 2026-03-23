@@ -23,9 +23,12 @@ export function ProductCard({ product, rank }: { product: Product, rank?: number
         </div>
       )}
       
-      <div className="relative h-48 w-full md:w-64 shrink-0 overflow-hidden rounded-xl bg-gray-50 dark:bg-gray-800 flex items-center justify-center">
-        {/* Placeholder for real image */}
-        <div className="text-gray-400 text-sm italic">Image: {product.brand}</div>
+      <div className="relative h-48 w-full md:w-64 shrink-0 p-4 overflow-hidden rounded-xl bg-white flex items-center justify-center border border-gray-100 dark:border-gray-800 shadow-sm mix-blend-multiply dark:mix-blend-normal">
+        {product.image_url ? (
+          <img src={product.image_url} alt={product.title} className="max-h-full max-w-full object-contain" />
+        ) : (
+          <div className="text-gray-400 text-sm italic">Image: {product.brand}</div>
+        )}
       </div>
 
       <div className="flex flex-1 flex-col justify-between">

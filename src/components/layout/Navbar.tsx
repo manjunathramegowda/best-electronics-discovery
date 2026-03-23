@@ -11,9 +11,10 @@ export function Navbar() {
         </Link>
         <div className="flex-1" />
         <nav className="hidden md:flex items-center gap-8 text-sm font-medium">
-          <Link href="/best-mixer-grinders" className="text-gray-600 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-400 transition-colors">Mixer Grinders</Link>
-          <Link href="/best-tvs" className="text-gray-600 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-400 transition-colors">Televisions</Link>
-          <Link href="/best-laptops" className="text-gray-600 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-400 transition-colors">Laptops</Link>
+          <Link href="/category/best-mobiles" className="text-gray-600 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-400 transition-colors">Mobile Phones</Link>
+          <Link href="/category/best-laptops" className="text-gray-600 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-400 transition-colors">Laptops</Link>
+          <Link href="/category/best-tvs" className="text-gray-600 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-400 transition-colors">Televisions</Link>
+          <Link href="/compare" className="text-blue-600 font-bold dark:text-blue-400 hover:underline transition-colors flex items-center gap-1.5 hidden lg:flex">Compare Products</Link>
         </nav>
         <div className="flex items-center gap-4 xl:ml-8 lg:ml-8 md:ml-8 ml-auto">
           <button className="p-2 text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors" aria-label="Search">
